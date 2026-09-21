@@ -33,8 +33,8 @@ export default function GalleryUploader({
         uploaded.push(url);
       }
       onChange([...values, ...uploaded]);
-    } catch {
-      setError("Bazı dosyalar yüklenemedi, tekrar dene.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Bazı dosyalar yüklenemedi, tekrar dene.");
       if (uploaded.length) onChange([...values, ...uploaded]);
     } finally {
       setUploading(false);

@@ -23,8 +23,8 @@ export default function Uploader({ value, onChange, accept = "image/*,video/*", 
     try {
       const url = await uploadToCloudinary(file, setProgress);
       onChange(url);
-    } catch {
-      setError("Yükleme başarısız oldu, tekrar dene.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Yükleme başarısız oldu, tekrar dene.");
     } finally {
       setUploading(false);
       setProgress(0);
