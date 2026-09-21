@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import Uploader from "./Uploader";
 import RepeatableFields from "./RepeatableFields";
 import type { SiteContent } from "@prisma/client";
@@ -14,8 +14,12 @@ export default function SiteContentForm({
   action,
 }: {
   content: SiteContent;
-  action: (formData: FormData) => void;
+  action: (
+    prevState: { success?: boolean } | undefined,
+    formData: FormData
+  ) => Promise<{ success?: boolean }>;
 }) {
+  const [state, formAction, pending] = useActionState(action, undefined);
   const [heroImage, setHeroImage] = useState(content.heroImage);
   const [aboutImage, setAboutImage] = useState(content.aboutImage);
   const [stats, setStats] = useState<StatItem[]>((content.stats as StatItem[]) ?? []);
@@ -23,7 +27,7 @@ export default function SiteContentForm({
   const [values, setValues] = useState<ValueItem[]>((content.values as ValueItem[]) ?? []);
 
   return (
-    <form action={action} className="space-y-16">
+    <form action={formAction} className="space-y-16">
       <input type="hidden" name="heroImage" value={heroImage} />
       <input type="hidden" name="aboutImage" value={aboutImage} />
 
@@ -164,12 +168,20 @@ export default function SiteContentForm({
         </div>
       </section>
 
-      <button
-        type="submit"
-        className="inline-flex items-center rounded-pill bg-foreground text-background px-7 py-3.5 text-sm font-semibold"
-      >
-        Kaydet
-      </button>
+      <div className="flex items-center gap-4">
+        <button
+          type="submit"
+          disabled={pending}
+          className="inline-flex items-center rounded-pill bg-foreground text-background px-7 py-3.5 text-sm font-semibold disabled:opacity-50"
+        >
+          {pending ? "Kaydediliyor…" : "Kaydet"}
+        </button>
+        {state?.success && !pending && (
+          <span className="text-sm text-green-600 font-medium">
+            Kaydedildi ✓
+          </span>
+        )}
+      </div>
     </form>
   );
 }

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Özkur İnşaat | Kaliteli Yaşam Alanları",
@@ -26,11 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body className="antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

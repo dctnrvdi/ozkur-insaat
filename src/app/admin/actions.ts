@@ -126,7 +126,10 @@ export async function moveProject(id: string, direction: "up" | "down") {
   revalidatePath("/projeler");
 }
 
-export async function updateSiteContent(formData: FormData) {
+export async function updateSiteContent(
+  _prevState: { success?: boolean } | undefined,
+  formData: FormData
+) {
   await requireAuth();
 
   function parseList(name: string) {
@@ -178,6 +181,8 @@ export async function updateSiteContent(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/hakkimizda");
   revalidatePath("/iletisim");
+
+  return { success: true };
 }
 
 export async function logout() {
