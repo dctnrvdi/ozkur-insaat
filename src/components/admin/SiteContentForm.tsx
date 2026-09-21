@@ -172,8 +172,11 @@ export default function SiteContentForm({
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex items-center rounded-pill bg-foreground text-background px-7 py-3.5 text-sm font-semibold disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-pill bg-foreground text-background px-7 py-3.5 text-sm font-semibold disabled:opacity-50"
         >
+          {pending && (
+            <span className="h-4 w-4 rounded-full border-2 border-background/30 border-t-background animate-spin" />
+          )}
           {pending ? "Kaydediliyor…" : "Kaydet"}
         </button>
         {state?.success && !pending && (

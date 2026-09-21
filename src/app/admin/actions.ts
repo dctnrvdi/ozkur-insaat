@@ -76,7 +76,7 @@ export async function updateProject(id: string, formData: FormData) {
     .map((s) => s.trim())
     .filter(Boolean);
 
-  await prisma.project.update({
+  const updated = await prisma.project.update({
     where: { id },
     data: {
       title,
@@ -96,6 +96,7 @@ export async function updateProject(id: string, formData: FormData) {
   revalidatePath("/admin/projeler");
   revalidatePath("/");
   revalidatePath("/projeler");
+  revalidatePath(`/projeler/${updated.slug}`);
   redirect("/admin/projeler");
 }
 
@@ -180,6 +181,7 @@ export async function updateSiteContent(
   revalidatePath("/admin/icerik");
   revalidatePath("/");
   revalidatePath("/hakkimizda");
+  revalidatePath("/hizmetler");
   revalidatePath("/iletisim");
 
   return { success: true };

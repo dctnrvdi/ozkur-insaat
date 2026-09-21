@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Uploader from "./Uploader";
+import SubmitButton from "./SubmitButton";
 import GalleryUploader from "./GalleryUploader";
 import type { Project } from "@prisma/client";
 
@@ -109,12 +110,7 @@ export default function ProjectForm({
       <Uploader value={videoUrl} onChange={setVideoUrl} accept="video/*" label="Proje Videosu (opsiyonel)" />
       <GalleryUploader values={gallery} onChange={setGallery} label="Galeri" />
 
-      <button
-        type="submit"
-        className="inline-flex items-center rounded-pill bg-foreground text-background px-7 py-3.5 text-sm font-semibold"
-      >
-        Kaydet
-      </button>
+      <SubmitButton />
     </form>
   );
 }

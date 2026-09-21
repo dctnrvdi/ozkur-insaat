@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { uploadToCloudinary } from "@/lib/uploadClient";
 
 export default function GalleryUploader({
   values,
@@ -13,23 +14,31 @@ export default function GalleryUploader({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState<{ current: number; total: number; percent: number } | null>(
+    null
+  );
+  const [error, setError] = useState<string | null>(null);
 
   async function handleFiles(files: FileList) {
     setUploading(true);
+    setError(null);
+    const list = Array.from(files);
+    const uploaded: string[] = [];
     try {
-      const uploaded: string[] = [];
-      for (const file of Array.from(files)) {
-        const formData = new FormData();
-        formData.append("file", file);
-        const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
-        if (res.ok) {
-          const data = await res.json();
-          uploaded.push(data.secure_url);
-        }
+      for (let i = 0; i < list.length; i++) {
+        setProgress({ current: i + 1, total: list.length, percent: 0 });
+        const url = await uploadToCloudinary(list[i], (percent) =>
+          setProgress({ current: i + 1, total: list.length, percent })
+        );
+        uploaded.push(url);
       }
       onChange([...values, ...uploaded]);
+    } catch {
+      setError("Bazı dosyalar yüklenemedi, tekrar dene.");
+      if (uploaded.length) onChange([...values, ...uploaded]);
     } finally {
       setUploading(false);
+      setProgress(null);
     }
   }
 
@@ -63,6 +72,24 @@ export default function GalleryUploader({
           </div>
         ))}
       </div>
+
+      {uploading && progress && (
+        <div className="mb-3 rounded-md bg-surface p-4">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="h-4 w-4 rounded-full border-2 border-border border-t-foreground animate-spin" />
+            <span className="text-sm font-medium">
+              Yükleniyor… ({progress.current}/{progress.total}) %{progress.percent}
+            </span>
+          </div>
+          <div className="h-1.5 w-full rounded-full bg-border overflow-hidden">
+            <div
+              className="h-full bg-foreground transition-all duration-200"
+              style={{ width: `${progress.percent}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
@@ -71,6 +98,7 @@ export default function GalleryUploader({
       >
         {uploading ? "Yükleniyor…" : "Görsel Ekle"}
       </button>
+      {error && <p className="text-xs text-red-600 mt-2">{error}</p>}
       <input
         ref={inputRef}
         type="file"
