@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MediaFrame from "@/components/MediaFrame";
-import type { Project } from "@/lib/projects";
+import type { Project } from "@prisma/client";
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (

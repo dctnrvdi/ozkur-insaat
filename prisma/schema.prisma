@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  location    String
+  category    String
+  status      String   @default("Devam Ediyor")
+  year        String
+  summary     String
+  description String[] @default([])
+  coverImage  String   @default("")
+  gallery     String[] @default([])
+  videoUrl    String?
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([order])
+}
+
+model SiteContent {
+  id             String   @id @default("main")
+  heroTitle      String   @default("Yaşam alanınız için daha fazla mekân")
+  heroSubtitle   String   @default("Özkur İnşaat; konut, villa ve karma kullanım projelerinde mühendislik disipliniyle mimari zarafeti bir araya getirir.")
+  heroImage      String   @default("")
+  stats          Json     @default("[]")
+  services       Json     @default("[]")
+  aboutTitle     String   @default("Güvenle inşa ediyor, kalıcı değer yaratıyoruz")
+  aboutIntro     String   @default("")
+  aboutMission   String   @default("")
+  aboutImage     String   @default("")
+  values         Json     @default("[]")
+  contactPhone   String   @default("+90 (000) 000 00 00")
+  contactEmail   String   @default("info@ozkurinsaat.com")
+  contactAddress String   @default("İzmir, Türkiye")
+  contactHours   String   @default("Pazartesi – Cuma, 09:00 – 18:00")
+  updatedAt      DateTime @updatedAt
+}

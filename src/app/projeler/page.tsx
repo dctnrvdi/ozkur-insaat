@@ -1,8 +1,13 @@
 import ProjectCard from "@/components/ProjectCard";
 import Reveal from "@/components/Reveal";
-import { projects } from "@/lib/projects";
+import { prisma } from "@/lib/prisma";
 
-export default function Projeler() {
+export default async function Projeler() {
+  const projects = await prisma.project.findMany({
+    where: { published: true },
+    orderBy: { order: "asc" },
+  });
+
   return (
     <>
       <section className="pt-40 pb-20 container-px">
@@ -24,6 +29,12 @@ export default function Projeler() {
             </Reveal>
           ))}
         </div>
+
+        {projects.length === 0 && (
+          <div className="text-center py-20 text-muted text-sm">
+            Yakında burada yeni projelerimizi paylaşacağız.
+          </div>
+        )}
       </section>
     </>
   );

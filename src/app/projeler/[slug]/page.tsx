@@ -2,11 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import MediaFrame from "@/components/MediaFrame";
 import Reveal from "@/components/Reveal";
-import { projects, getProject } from "@/lib/projects";
-
-export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
-}
+import { prisma } from "@/lib/prisma";
 
 export default async function ProjectDetail({
   params,
@@ -14,8 +10,15 @@ export default async function ProjectDetail({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = getProject(slug);
-  if (!project) notFound();
+  const project = await prisma.project.findUnique({ where: { slug } });
+  if (!project || !project.published) notFound();
+
+  const stats = [
+    { label: "Yıl", value: project.year },
+    { label: "Durum", value: project.status },
+    { label: "Kategori", value: project.category },
+    { label: "Konum", value: project.location },
+  ];
 
   return (
     <>
@@ -52,8 +55,9 @@ export default async function ProjectDetail({
       <section className="container-px pb-24 grid md:grid-cols-[2fr_1fr] gap-16">
         <Reveal>
           <div className="space-y-4">
-            {project.description.map((p) => (
-              <p key={p} className="text-muted leading-relaxed text-lg">
+            <p className="text-muted leading-relaxed text-lg">{project.summary}</p>
+            {project.description.map((p, i) => (
+              <p key={i} className="text-muted leading-relaxed text-lg">
                 {p}
               </p>
             ))}
@@ -61,7 +65,7 @@ export default async function ProjectDetail({
         </Reveal>
         <Reveal delay={100}>
           <div className="border border-border rounded-lg p-8 grid grid-cols-2 gap-6 h-fit">
-            {project.stats.map((stat) => (
+            {stats.map((stat) => (
               <div key={stat.label}>
                 <div className="text-xs text-muted uppercase tracking-wide mb-1">
                   {stat.label}
@@ -72,6 +76,21 @@ export default async function ProjectDetail({
           </div>
         </Reveal>
       </section>
+
+      {project.videoUrl && (
+        <section className="container-px pb-28">
+          <Reveal>
+            <h2 className="font-display font-bold text-2xl mb-8">Video</h2>
+            <div className="aspect-video rounded-lg overflow-hidden bg-foreground">
+              <video
+                src={project.videoUrl}
+                controls
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </Reveal>
+        </section>
+      )}
 
       {project.gallery.length > 0 && (
         <section className="container-px pb-28">

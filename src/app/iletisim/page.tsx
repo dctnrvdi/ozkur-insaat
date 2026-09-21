@@ -1,6 +1,15 @@
 import Reveal from "@/components/Reveal";
+import { prisma } from "@/lib/prisma";
 
-export default function Iletisim() {
+export default async function Iletisim() {
+  const content = await prisma.siteContent.findUnique({ where: { id: "main" } });
+
+  const phone = content?.contactPhone ?? "+90 (000) 000 00 00";
+  const email = content?.contactEmail ?? "info@ozkurinsaat.com";
+  const address = content?.contactAddress ?? "İzmir, Türkiye";
+  const hours = content?.contactHours ?? "Pazartesi – Cuma, 09:00 – 18:00";
+  const phoneHref = `tel:${phone.replace(/[^\d+]/g, "")}`;
+
   return (
     <>
       <section className="pt-40 pb-20 container-px">
@@ -17,7 +26,7 @@ export default function Iletisim() {
       <section className="container-px pb-28 grid md:grid-cols-2 gap-16">
         <Reveal>
           <form
-            action="https://formsubmit.co/info@ozkurinsaat.com"
+            action={`https://formsubmit.co/${email}`}
             method="POST"
             className="space-y-5"
           >
@@ -90,33 +99,29 @@ export default function Iletisim() {
               <div className="text-xs text-muted uppercase tracking-wide mb-2">
                 Telefon
               </div>
-              <a href="tel:+900000000000" className="text-lg font-display font-semibold">
-                +90 (000) 000 00 00
+              <a href={phoneHref} className="text-lg font-display font-semibold">
+                {phone}
               </a>
             </div>
             <div>
               <div className="text-xs text-muted uppercase tracking-wide mb-2">
                 E-posta
               </div>
-              <a href="mailto:info@ozkurinsaat.com" className="text-lg font-display font-semibold">
-                info@ozkurinsaat.com
+              <a href={`mailto:${email}`} className="text-lg font-display font-semibold">
+                {email}
               </a>
             </div>
             <div>
               <div className="text-xs text-muted uppercase tracking-wide mb-2">
                 Ofis
               </div>
-              <p className="text-lg font-display font-semibold">
-                İzmir, Türkiye
-              </p>
+              <p className="text-lg font-display font-semibold">{address}</p>
             </div>
             <div className="pt-4 border-t border-border">
               <div className="text-xs text-muted uppercase tracking-wide mb-2">
                 Çalışma Saatleri
               </div>
-              <p className="text-sm text-muted">
-                Pazartesi – Cuma, 09:00 – 18:00
-              </p>
+              <p className="text-sm text-muted">{hours}</p>
             </div>
           </div>
         </Reveal>
