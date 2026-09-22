@@ -2,6 +2,8 @@ import ProjectCard from "@/components/ProjectCard";
 import Reveal from "@/components/Reveal";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function Projeler() {
   const projects = await prisma.project.findMany({
     where: { published: true },

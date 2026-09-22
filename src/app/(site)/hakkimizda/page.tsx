@@ -2,6 +2,8 @@ import MediaFrame from "@/components/MediaFrame";
 import Reveal from "@/components/Reveal";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type ValueItem = { title: string; desc: string };
 
 export default async function Hakkimizda() {

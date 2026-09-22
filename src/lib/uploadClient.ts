@@ -1,12 +1,17 @@
 export type UploadProgress = (percent: number) => void;
 
-async function getSignature() {
-  const res = await fetch("/api/admin/upload-signature", { method: "POST" });
+async function getSignature(isVideo: boolean) {
+  const res = await fetch("/api/admin/upload-signature", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ isVideo }),
+  });
   if (!res.ok) throw new Error("İmza alınamadı");
   return res.json() as Promise<{
     signature: string;
     timestamp: number;
     folder: string;
+    format: string | null;
     apiKey: string;
     cloudName: string;
   }>;
@@ -53,10 +58,10 @@ async function compressImage(
 
 export function uploadToCloudinary(file: File, onProgress?: UploadProgress) {
   return new Promise<string>((resolve, reject) => {
+    const isVideo = file.type.startsWith("video/");
     compressImage(file)
       .then((prepared) =>
-        getSignature().then(({ signature, timestamp, folder, apiKey, cloudName }) => {
-          const isVideo = prepared.type.startsWith("video/");
+        getSignature(isVideo).then(({ signature, timestamp, folder, format, apiKey, cloudName }) => {
           const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/${
             isVideo ? "video" : "image"
           }/upload`;
@@ -67,6 +72,7 @@ export function uploadToCloudinary(file: File, onProgress?: UploadProgress) {
           formData.append("timestamp", String(timestamp));
           formData.append("signature", signature);
           formData.append("folder", folder);
+          if (format) formData.append("format", format);
 
           const xhr = new XMLHttpRequest();
           xhr.open("POST", uploadUrl);

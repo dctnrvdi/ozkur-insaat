@@ -1,6 +1,8 @@
 import Reveal from "@/components/Reveal";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function Iletisim() {
   const content = await prisma.siteContent.findUnique({ where: { id: "main" } });
 

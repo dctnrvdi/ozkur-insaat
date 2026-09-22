@@ -3,6 +3,8 @@ import MediaFrame from "@/components/MediaFrame";
 import Reveal from "@/components/Reveal";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type StatItem = { label: string; value: string };
 type ServiceItem = { title: string; desc: string };
 

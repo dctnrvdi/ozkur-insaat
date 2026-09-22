@@ -2,6 +2,8 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type ServiceItem = { title: string; desc: string };
 
 export default async function Hizmetler() {
