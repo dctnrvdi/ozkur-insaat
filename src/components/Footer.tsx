@@ -1,7 +1,18 @@
 import Link from "next/link";
 import CreditMarquee from "./CreditMarquee";
 
-export default function Footer() {
+type FooterProps = {
+  phone?: string;
+  email?: string;
+  address?: string;
+};
+
+export default function Footer({
+  phone = "+90 (000) 000 00 00",
+  email = "info@ozkurinsaat.com",
+  address = "İzmir, Türkiye",
+}: FooterProps) {
+  const phoneHref = `tel:${phone.replace(/[^\d+]/g, "")}`;
   return (
     <footer className="bg-foreground text-background">
       <div className="container-px py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -40,13 +51,13 @@ export default function Footer() {
             İletişim
           </div>
           <div className="flex flex-col gap-3 text-sm text-background/80">
-            <a href="tel:+900000000000" className="hover:text-background">
-              +90 (000) 000 00 00
+            <a href={phoneHref} className="hover:text-background">
+              {phone}
             </a>
-            <a href="mailto:info@ozkurinsaat.com" className="hover:text-background">
-              info@ozkurinsaat.com
+            <a href={`mailto:${email}`} className="hover:text-background">
+              {email}
             </a>
-            <span>İzmir, Türkiye</span>
+            <span>{address}</span>
           </div>
         </div>
       </div>

@@ -15,7 +15,11 @@ export default async function SiteLayout({
     <>
       <Header logo={content?.logo ?? ""} />
       <main>{children}</main>
-      <Footer />
+      <Footer
+        phone={content?.contactPhone}
+        email={content?.contactEmail}
+        address={content?.contactAddress}
+      />
     </>
   );
 }
