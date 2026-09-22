@@ -27,8 +27,9 @@ export default async function Hizmetler() {
         <div className="grid md:grid-cols-2 gap-8">
           {services.map((service, i) => (
             <Reveal key={service.title} delay={i * 80}>
-              <div className="border border-border rounded-lg p-10 h-full">
-                <div className="text-sm text-muted mb-4">
+              <div className="group relative border border-border rounded-lg p-10 h-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5">
+                <span className="absolute top-0 left-0 h-[2px] w-full bg-accent origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+                <div className="text-sm text-muted mb-4 transition-colors duration-300 group-hover:text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </div>
                 <h2 className="font-display font-bold text-2xl mb-4">{service.title}</h2>

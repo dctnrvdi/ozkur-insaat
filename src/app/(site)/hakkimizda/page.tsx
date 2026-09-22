@@ -56,8 +56,11 @@ export default async function Hakkimizda() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-border rounded-lg overflow-hidden">
               {values.map((v, i) => (
                 <Reveal key={v.title} delay={i * 80}>
-                  <div className="bg-background p-8 h-full">
-                    <h3 className="font-display font-bold text-lg mb-3">{v.title}</h3>
+                  <div className="group relative bg-background p-8 h-full overflow-hidden transition-colors duration-300 hover:bg-surface">
+                    <span className="absolute top-0 left-0 h-[2px] w-full bg-accent origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+                    <h3 className="font-display font-bold text-lg mb-3 transition-colors duration-300 group-hover:text-accent">
+                      {v.title}
+                    </h3>
                     <p className="text-sm text-muted leading-relaxed">{v.desc}</p>
                   </div>
                 </Reveal>

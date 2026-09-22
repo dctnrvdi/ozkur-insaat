@@ -173,8 +173,9 @@ export default async function Home() {
             <div className="grid md:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
               {services.map((service, i) => (
                 <Reveal key={service.title} delay={i * 80}>
-                  <div className="bg-background p-10 h-full">
-                    <div className="text-sm text-muted mb-4">
+                  <div className="group relative bg-background p-10 h-full overflow-hidden transition-colors duration-300 hover:bg-surface">
+                    <span className="absolute top-0 left-0 h-[2px] w-full bg-accent origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+                    <div className="text-sm text-muted mb-4 transition-colors duration-300 group-hover:text-accent">
                       {String(i + 1).padStart(2, "0")}
                     </div>
                     <h3 className="font-display font-bold text-xl mb-3">

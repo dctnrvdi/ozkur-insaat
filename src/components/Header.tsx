@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -12,7 +13,7 @@ const NAV_LINKS = [
   { href: "/iletisim", label: "İletişim" },
 ];
 
-export default function Header() {
+export default function Header({ logo = "" }: { logo?: string }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [scrolledState, setScrolledState] = useState(false);
@@ -40,13 +41,28 @@ export default function Header() {
       }`}
     >
       <div className="container-px flex items-center justify-between h-20">
-        <Link
-          href="/"
-          className={`font-display font-extrabold text-lg tracking-tight transition-colors ${
-            scrolled ? "text-foreground" : "text-white"
-          }`}
-        >
-          Özkur İnşaat
+        <Link href="/" className="flex items-center">
+          {logo ? (
+            <span className="relative h-9 w-36 block">
+              <Image
+                src={logo}
+                alt="Özkur İnşaat"
+                fill
+                className={`object-contain object-left transition-all ${
+                  scrolled ? "" : "brightness-0 invert"
+                }`}
+                priority
+              />
+            </span>
+          ) : (
+            <span
+              className={`font-display font-extrabold text-lg tracking-tight transition-colors ${
+                scrolled ? "text-foreground" : "text-white"
+              }`}
+            >
+              Özkur İnşaat
+            </span>
+          )}
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">

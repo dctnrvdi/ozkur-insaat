@@ -22,6 +22,7 @@ export default function SiteContentForm({
   const [state, formAction, pending] = useActionState(action, undefined);
   const [heroImage, setHeroImage] = useState(content.heroImage);
   const [heroVideo, setHeroVideo] = useState(content.heroVideo);
+  const [logo, setLogo] = useState(content.logo);
   const [aboutImage, setAboutImage] = useState(content.aboutImage);
   const [stats, setStats] = useState<StatItem[]>((content.stats as StatItem[]) ?? []);
   const [services, setServices] = useState<ServiceItem[]>((content.services as ServiceItem[]) ?? []);
@@ -31,7 +32,15 @@ export default function SiteContentForm({
     <form action={formAction} className="space-y-16">
       <input type="hidden" name="heroImage" value={heroImage} />
       <input type="hidden" name="heroVideo" value={heroVideo} />
+      <input type="hidden" name="logo" value={logo} />
       <input type="hidden" name="aboutImage" value={aboutImage} />
+
+      <section>
+        <h2 className="font-display font-bold text-xl mb-6">Logo</h2>
+        <div className="space-y-5">
+          <Uploader value={logo} onChange={setLogo} accept="image/*" label="Site Logosu (boş bırakılırsa \"Özkur İnşaat\" yazısı gösterilir)" />
+        </div>
+      </section>
 
       <section>
         <h2 className="font-display font-bold text-xl mb-6">Anasayfa — Hero</h2>
