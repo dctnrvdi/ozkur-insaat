@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
@@ -12,15 +13,23 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [scrolledState, setScrolledState] = useState(false);
   const [open, setOpen] = useState(false);
 
+  // Sadece anasayfada, en üstteyken tam ekran koyu hero görseli/videosu var —
+  // diğer sayfaların en üstü açık renkli olduğu için orada her zaman koyu
+  // (scrolled) stil kullanılır, aksi halde beyaz yazılar beyaz zeminde kaybolur.
+  const scrolled = isHome ? scrolledState : true;
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    if (!isHome) return;
+    const onScroll = () => setScrolledState(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isHome]);
 
   return (
     <header

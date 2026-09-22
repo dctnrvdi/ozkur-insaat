@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CreditMarquee from "./CreditMarquee";
 
 export default function Footer() {
   return (
@@ -54,6 +55,8 @@ export default function Footer() {
         <span>© {new Date().getFullYear()} Özkur İnşaat. Tüm hakları saklıdır.</span>
         <span>ozkurinsaat.com</span>
       </div>
+
+      <CreditMarquee />
     </footer>
   );
 }

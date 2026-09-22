@@ -72,3 +72,12 @@ h1, h2, h3, h4 {
   opacity: 1;
   transform: translateY(0);
 }
+
+@keyframes cpc-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
