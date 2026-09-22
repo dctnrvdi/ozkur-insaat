@@ -81,3 +81,48 @@ h1, h2, h3, h4 {
     transform: translateX(-50%);
   }
 }
+
+.cpc-marquee-track {
+  animation: cpc-marquee 22s linear infinite;
+  width: max-content;
+}
+.cpc-marquee-track:hover {
+  animation-play-state: paused;
+}
+.cpc-sig-link {
+  transition: opacity 0.3s;
+}
+.cpc-label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.cpc-brand {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.7);
+  transition: 0.3s;
+  white-space: nowrap;
+}
+.cpc-sig-link:hover .cpc-label {
+  color: rgb(201, 168, 76);
+}
+.cpc-sig-link:hover .cpc-brand {
+  color: rgb(255, 255, 255);
+  letter-spacing: 0.35em;
+}
+.cpc-sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(201, 168, 76, 0.4);
+  margin: 0 32px;
+  flex-shrink: 0;
+}

@@ -1,14 +1,11 @@
-const REPEAT = 6;
+const REPEAT = 5;
 
 export default function CreditMarquee() {
   const items = Array.from({ length: REPEAT });
 
   return (
     <div className="overflow-hidden bg-black/20 border-t border-background/10">
-      <div
-        className="flex w-max items-center"
-        style={{ animation: "cpc-marquee 22s linear infinite" }}
-      >
+      <div className="cpc-marquee-track flex items-center">
         {[0, 1].map((group) => (
           <div key={group} className="flex items-center">
             {items.map((_, i) => (
@@ -17,19 +14,12 @@ export default function CreditMarquee() {
                   href="https://cutpastecut.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 py-3 text-[13px] font-medium"
+                  className="cpc-sig-link flex items-center gap-3.5 py-5"
                 >
-                  <span className="text-background/30">
-                    Tasarım &amp; Geliştirme
-                  </span>
-                  <span className="text-accent/80 font-semibold tracking-wide">
-                    CUTPASTECUT®
-                  </span>
+                  <span className="cpc-label">Tasarım &amp; Geliştirme</span>
+                  <span className="cpc-brand">CUTPASTECUT®</span>
                 </a>
-                <span
-                  className="mx-8 h-1 w-1 rounded-full bg-accent/40"
-                  aria-hidden
-                />
+                <span className="cpc-sep" aria-hidden />
               </div>
             ))}
           </div>
