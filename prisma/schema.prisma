@@ -41,6 +41,7 @@ model SiteContent {
   heroTitle      String   @default("Yaşam alanınız için daha fazla mekân")
   heroSubtitle   String   @default("Özkur İnşaat; konut, villa ve karma kullanım projelerinde mühendislik disipliniyle mimari zarafeti bir araya getirir.")
   heroImage      String   @default("")
+  heroVideo      String   @default("")
   stats          Json     @default("[]")
   services       Json     @default("[]")
   aboutTitle     String   @default("Güvenle inşa ediyor, kalıcı değer yaratıyoruz")

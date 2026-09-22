@@ -21,6 +21,7 @@ export default function SiteContentForm({
 }) {
   const [state, formAction, pending] = useActionState(action, undefined);
   const [heroImage, setHeroImage] = useState(content.heroImage);
+  const [heroVideo, setHeroVideo] = useState(content.heroVideo);
   const [aboutImage, setAboutImage] = useState(content.aboutImage);
   const [stats, setStats] = useState<StatItem[]>((content.stats as StatItem[]) ?? []);
   const [services, setServices] = useState<ServiceItem[]>((content.services as ServiceItem[]) ?? []);
@@ -29,6 +30,7 @@ export default function SiteContentForm({
   return (
     <form action={formAction} className="space-y-16">
       <input type="hidden" name="heroImage" value={heroImage} />
+      <input type="hidden" name="heroVideo" value={heroVideo} />
       <input type="hidden" name="aboutImage" value={aboutImage} />
 
       <section>
@@ -52,6 +54,7 @@ export default function SiteContentForm({
             />
           </div>
           <Uploader value={heroImage} onChange={setHeroImage} accept="image/*" label="Hero Görseli" />
+          <Uploader value={heroVideo} onChange={setHeroVideo} accept="video/*" label="Hero Videosu (opsiyonel, yüklenirse görselin yerine gösterilir)" />
         </div>
       </section>
 

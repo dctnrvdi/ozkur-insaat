@@ -23,7 +23,7 @@ function LoginForm() {
           <input
             id="email"
             name="email"
-            type="email"
+            type="text"
             required
             className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm outline-none focus:border-accent"
           />

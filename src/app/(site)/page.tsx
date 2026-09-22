@@ -23,15 +23,26 @@ export default async function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative h-screen min-h-[640px] flex items-end">
-        <MediaFrame
-          src={content?.heroImage ?? ""}
-          alt="Özkur İnşaat"
-          label="Hero Görseli"
-          className="absolute inset-0"
-          focus="center 68%"
-          priority
-        />
+      <section className="relative h-screen min-h-[640px] flex items-end overflow-hidden">
+        {content?.heroVideo ? (
+          <video
+            src={content.heroVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <MediaFrame
+            src={content?.heroImage ?? ""}
+            alt="Özkur İnşaat"
+            label="Hero Görseli"
+            className="absolute inset-0"
+            focus="center 68%"
+            priority
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
 
         <div className="relative container-px pb-24 w-full text-white">
