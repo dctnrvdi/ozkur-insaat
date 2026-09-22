@@ -38,7 +38,7 @@ export default function SiteContentForm({
       <section>
         <h2 className="font-display font-bold text-xl mb-6">Logo</h2>
         <div className="space-y-5">
-          <Uploader value={logo} onChange={setLogo} accept="image/*" label="Site Logosu (boş bırakılırsa \"Özkur İnşaat\" yazısı gösterilir)" />
+          <Uploader value={logo} onChange={setLogo} accept="image/*" label={`Site Logosu (boş bırakılırsa "Özkur İnşaat" yazısı gösterilir)`} />
         </div>
       </section>
 
