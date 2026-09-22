@@ -29,6 +29,7 @@ export default async function Home() {
           alt="Özkur İnşaat"
           label="Hero Görseli"
           className="absolute inset-0"
+          focus="center 68%"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
